@@ -1,7 +1,7 @@
 #include <Arduino.h>
 
 int threeMinButton = 3;
-int threeAndTwo = 6;
+// int threeAndTwo = 6;
 int relayOutput = 7;
 int millSeconds;
 
@@ -15,12 +15,14 @@ void horn(int);
 void setup() {
   Serial.begin(9600);
   pinMode(threeMinButton, INPUT); // Input button for runThreeMinutes()
-  pinMode(threeAndTwo, INPUT); // Input botton for runThreeAndTwo()
+  // pinMode(threeAndTwo, INPUT); // Input botton for runThreeAndTwo()
   pinMode(relayOutput, OUTPUT); // Output for Relay for horn
 }
 
 void loop() {
-
+  if(digitalRead(threeMinButton) == HIGH){
+    runThreeMinutes();
+  }
 }
 
 void horn(int millSeconds){
