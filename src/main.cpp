@@ -1,31 +1,61 @@
 #include <Arduino.h>
 
+int threeMinButton = 3;
+int threeAndTwo = 6;
+int relayOutput = 7;
+
+void runThreeMinutes();
+void runThreeAndTwo();
+
+void ThreeMinHorn();
+void TwoMinHorn();
+void OneMinHorn();
+
 void setup() {
-  pinMode(12, OUTPUT); // pin 13 - change value if you have LED on diff pin
   Serial.begin(9600);
 
-  pinMode(3, INPUT); // Input button for runThreeMinutes()
-  pinMode(6, INPUT); // Input botton for runThreeAndTwo()
+  pinMode(threeMinButton, INPUT); // Input button for runThreeMinutes()
+  pinMode(threeAndTwo, INPUT); // Input botton for runThreeAndTwo()
 
-  pinMode(7, OUTPUT); // Output for Relay for horn
+  pinMode(relayOutput, OUTPUT); // Output for Relay for horn
 
 }
 
 void loop() {
-  
+  if(digitalRead(threeMinButton) == HIGH){
+    runThreeMinutes();
+    Serial.write("Three Min putton Pressed");
+  }
+  else if(digitalRead(threeAndTwo) == HIGH){
+    runThreeAndTwo();
+    Serial.write("Two min putton Pressed");
+  }
 }
 
-// Fucntion to run a 3 minute starting sequence 
-void runThreeMinutes(){
+/////////////////////////////
+//   Starting Sequences    //
+/////////////////////////////
+void runThreeMinutes(){ // Fucntion to run a 3 minute starting sequence 
   ThreeMinHorn();
-  
-}
-
-// Function to run 3 concective 2 minute starts 
-void runThreeAndTwo(){
+  TwoMinHorn();
+  OneMinHorn();
 
 }
 
+void runThreeAndTwo(){ // Function to run 3 concective 2 minute starts 
+  // Sequence #1
+  TwoMinHorn();
+  OneMinHorn();
+
+  // Sequence #2
+  TwoMinHorn();
+  OneMinHorn();
+}
+
+
+/////////////////////////
+//   Horn Functions    //
+/////////////////////////
 void ThreeMinHorn(){
 // First Horn
   digitalWrite(7,HIGH);
